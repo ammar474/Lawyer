@@ -1,0 +1,91 @@
+// import express from 'express';
+// import { SignUp } from './models/SignUpModel'; // Assuming the schema is in models folder
+
+// const app = express();
+// app.use(express.json()); // Middleware to parse JSON request bodies
+
+// // POST /api/signup with file uploads
+// app.post('/api/signup', upload.fields([
+//     { name: 'cnicFrontImage', maxCount: 1 },
+//     { name: 'cnicBackImage', maxCount: 1 },
+//     { name: 'barCouncilImage', maxCount: 1 }
+// ]), async (req, res) => {
+//     try {
+//         const { fullName, email, phone, cnic, barCouncilId, role } = req.body;
+
+//         // Check if all required files are uploaded
+//         if (!req.files || !req.files.cnicFrontImage || !req.files.cnicBackImage || !req.files.barCouncilImage) {
+//             return res.status(400).json({ error: 'All images are required' });
+//         }
+
+//         // Create a new signup record
+//         const newSignUp = new SignUp({
+//             fullName,
+//             email,
+//             phone,
+//             cnic,
+//             barCouncilId,
+//             role,
+//             cnicFrontImage: req.files.cnicFrontImage[0].path, // File path
+//             cnicBackImage: req.files.cnicBackImage[0].path,   // File path
+//             barCouncilImage: req.files.barCouncilImage[0].path // File path
+//         });
+
+//         // Save the signup to the database
+//         await newSignUp.save();
+
+//         res.status(201).json({ message: 'Sign-up successful', newSignUp });
+//     } catch (error) {
+//         if (error.code === 11000) { // Check for duplicate email, CNIC, or barCouncilId
+//             return res.status(400).json({ error: 'Duplicate entry. Email, CNIC or Bar Council ID already exists' });
+//         }
+//         res.status(500).json({ error: 'Failed to sign up' });
+//     }
+// });
+
+
+const authorize = (roles) => {
+    return (req, res, next) => {
+        const userRole = req.user.role; // Assume user role is added to req after JWT verification
+
+        if (!roles.includes(userRole)) {
+            return res.status(403).json({ message: 'Access denied.' });
+        }
+
+        next();
+    };
+};
+
+// Middleware to check roles
+function authorizeRoles(...allowedRoles) {
+    return (req, res, next) => {
+        const userRole = req.user.role; // Assuming req.user is set after authentication
+
+        // Check if user's role is allowed
+        if (!allowedRoles.includes(userRole)) {
+            return res.status(403).json({ message: "Access denied." });
+        }
+
+        next();
+    };
+}
+
+// Example routes
+app.post('/api/cases', authorizeRoles('lawyer'), (req, res) => {
+    // Only lawyers can add cases
+    // Code for adding cases
+});
+
+app.get('/api/cases', authorizeRoles('lawyer', 'paralegal', 'assistant'), (req, res) => {
+    // Lawyers, paralegals, and assistants can view cases
+    // Code for fetching cases
+});
+
+app.put('/api/cases/:id', authorizeRoles('lawyer', 'paralegal'), (req, res) => {
+    // Only lawyers and paralegals can update cases
+    // Code for updating cases
+});
+
+
+
+
