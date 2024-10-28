@@ -12,7 +12,7 @@ const CaseProceedingSchema = new mongoose.Schema({
     required: true,
   },
   caseConcluded: {
-    type: Boolean, 
+    type: Boolean,  
     default: true,
   },
   orderOfTheDay: {

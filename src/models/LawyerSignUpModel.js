@@ -23,6 +23,38 @@ const  LawyerSignUpSchema = mongoose.Schema({
     required: true,
     unique: true,
   },
+  designation: {
+    type: String,
+    required: false, 
+  },
+  experience: {
+    type: Number,
+    required: false,
+  },
+  qualification: {
+    type: String,
+    required: false, 
+  },
+  station: {
+    type: String,
+    required: false, 
+  },
+  officeAddress: {
+    type: String,
+    required: false, 
+  },
+  areaOfExpertise: {
+    type: String,
+    required: false, 
+  },
+  caseCovered :{
+     type : Number,
+     required : false
+  },
+  city :{
+    type: String,
+    required : false
+  },
   barCouncilId: {
     type: String,
     required: true,
@@ -41,6 +73,14 @@ const  LawyerSignUpSchema = mongoose.Schema({
     required: true,
   },
   barCouncilImage: {
+    type: String,
+    required: true,
+  },
+  professionalDocuments: [{
+    type: String,
+    required: true,
+  }],
+  profileImage: {
     type: String,
     required: true,
   },

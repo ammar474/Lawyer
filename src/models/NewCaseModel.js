@@ -2,13 +2,14 @@ import mongoose from "mongoose";
 
 const NewCaseSchema = new mongoose.Schema({
   caseType: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "CaseType",
     required: true,
   },
   caseSubCategory: {
     type: String,
     required: true,
-  }, 
+  },
   party: {
     type: String,
     required: true,
@@ -27,7 +28,7 @@ const NewCaseSchema = new mongoose.Schema({
   },
   hearingDate: {
     type: Date,
-    required : true
+    required: true,
   },
   caseStatus: {
     type: String,
@@ -75,16 +76,17 @@ const NewCaseSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  caseDocuments:[  {
-    type: String,
-    required: false,
+  caseDocuments: [
+    {
+      type: String,
+      required: false,
+    },
+  ],
+  lawyerId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Lawyer",
+    required: true,
   },
-],
- lawyerId: {
-  type: mongoose.Schema.Types.ObjectId,
-  ref: 'Lawyer',
-  required: true,
-},
 
   createdAt: {
     type: Date,
@@ -97,4 +99,3 @@ const NewCaseSchema = new mongoose.Schema({
 });
 
 export const NewCase = mongoose.model("NewCase", NewCaseSchema);
-

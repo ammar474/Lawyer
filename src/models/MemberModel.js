@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const MemberSchema = new mongoose.Schema({
-  name: {
+  fullName: {
     type: String,
     required: true,
   },
@@ -39,14 +39,16 @@ const MemberSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  professionalDocument: {
+  professionalDocument:[ {
     type: String,
     required: true,
   },
-  councilIdDocument: {
+],
+  councilIdDocument:[{
     type: String,
     required: true,
-  },
+  }
+],
   createdAt: {
     type: Date,
     default: Date.now,

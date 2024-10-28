@@ -9,6 +9,7 @@ import MemberRoutes from "./src/routes/MemberRoute.js";
 import LawyerSignUpRoutes from "./src/routes/LawyerSignUpRoute.js";
 import ProfileRoute from "./src/routes/EditeProfileRoute.js";
 import LoginRoutes from "./src/routes/LoginRoute.js";
+import addCaseType from "./src/routes/CaseTypeRoute.js";
 
 const app = express();
 dotenv.config();
@@ -22,6 +23,8 @@ app.use("/Member", MemberRoutes);
 app.use("/SignUp", LawyerSignUpRoutes);
 app.use("/Profile", ProfileRoute);
 app.use("/Login", LoginRoutes);
+app.use("/AddCaseType", addCaseType);
+
 app.use(
   "/public/uploads",
   express.static(path.join(__dirname, "public/uploads"))

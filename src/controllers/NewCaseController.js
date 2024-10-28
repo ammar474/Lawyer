@@ -2,6 +2,7 @@ import { NewCase } from "../models/NewCaseModel.js";
 import validateInput from "../helper/ValidateInputs.js";
 
 
+
 export const AddNewCase = async (req, res) => {
  
   const {
